@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 mod costs;
+mod color;
 use crate::costs::*;
 use crate::costs::Cost::*;
 

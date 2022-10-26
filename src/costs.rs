@@ -38,6 +38,7 @@ pub trait Costs<T> {
     fn lower_cost(t1: &T, t2: &T, del: usize, sub: usize, ins: usize) -> Cost;
 }
 
+// Implementation of the Costs trait for the Levenshtein distance
 pub struct LevenshteinCosts {}
 
 impl Costs<char> for LevenshteinCosts {
