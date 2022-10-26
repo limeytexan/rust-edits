@@ -1,5 +1,5 @@
-pub use crate::difference::*;
 use crate::costs::*;
+pub use crate::difference::*;
 use crate::edit_matrix::*;
 use crate::edit_operation::*;
 
@@ -105,29 +105,11 @@ mod tests {
     fn test_show_distance() {
         assert_eq!(show_distance("k", "l"), "[~k/l]");
         assert_eq!(show_distance("ki", "ka"), "k[~i/a]");
-        assert_eq!(
-            show_distance("kitte", "kittei"),
-            "kitte[+i]"
-        );
-        assert_eq!(
-            show_distance("kitten", "kittein"),
-            "kitte[+i]n"
-        );
-        assert_eq!(
-            show_distance("kitten", "kit"),
-            "kit[-t-e-n]"
-        );
-        assert_eq!(
-            show_distance("kit", "kitten"),
-            "kit[+t+e+n]"
-        );
-        assert_eq!(
-            show_distance("kitten", "kitsin"),
-            "kit[~t/s~e/i]n"
-        );
-        assert_eq!(
-            show_distance("kitte", "kitte"),
-            "kitte"
-        );
+        assert_eq!(show_distance("kitte", "kittei"), "kitte[+i]");
+        assert_eq!(show_distance("kitten", "kittein"), "kitte[+i]n");
+        assert_eq!(show_distance("kitten", "kit"), "kit[-t-e-n]");
+        assert_eq!(show_distance("kit", "kitten"), "kit[+t+e+n]");
+        assert_eq!(show_distance("kitten", "kitsin"), "kit[~t/s~e/i]n");
+        assert_eq!(show_distance("kitte", "kitte"), "kitte");
     }
 }

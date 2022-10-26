@@ -58,7 +58,10 @@ mod tests {
         assert_eq!("hello".to_string().color_as(Green), "\x1b[32mhello\x1b[0m");
         assert_eq!("hello".to_string().color_as(Yellow), "\x1b[33mhello\x1b[0m");
         assert_eq!("hello".to_string().color_as(Blue), "\x1b[34mhello\x1b[0m");
-        assert_eq!("hello".to_string().color_as(Magenta), "\x1b[35mhello\x1b[0m");
+        assert_eq!(
+            "hello".to_string().color_as(Magenta),
+            "\x1b[35mhello\x1b[0m"
+        );
         assert_eq!("hello".to_string().color_as(Cyan), "\x1b[36mhello\x1b[0m");
         assert_eq!("hello".to_string().color_as(White), "\x1b[37mhello\x1b[0m");
     }

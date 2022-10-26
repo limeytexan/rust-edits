@@ -188,10 +188,7 @@ mod tests {
             vec![start.clone(), kept("g"), end.clone()],
             vec![kept("h")],
         ];
-        assert_eq!(
-            split_on_delimiters(start, end, delimited),
-            expected
-        );
+        assert_eq!(split_on_delimiters(start, end, delimited), expected);
     }
     #[test]
     fn test_shorten() {
@@ -199,10 +196,7 @@ mod tests {
         assert_eq!(shorten("abcdefghijkl[mn]opqr"), "...hijkl[mn]opqr");
         assert_eq!(shorten("abcdefghijkl[mn]"), "...hijkl[mn]");
         assert_eq!(shorten("[mn]abcdefghijkl"), "[mn]abcde...");
-        assert_eq!(
-            shorten("abcdefghijkl[mn]opqrstuv"),
-            "...hijkl[mn]opqrs..."
-        );
+        assert_eq!(shorten("abcdefghijkl[mn]opqrstuv"), "...hijkl[mn]opqrs...");
         assert_eq!(
             shorten("hijkl[zz]abcdefghijklmno[xx]abcde"),
             "hijkl[zz]ab...no[xx]abcde"
