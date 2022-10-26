@@ -1,8 +1,9 @@
-//  This module provides a 'showDistance' function showing the differences between 2 pieces of text
+//  This module provides a 'show_distance' function showing the differences between 2 pieces of text
 //   using the Levenshtein distance. That distance is defined as the minimum number of edits: insertions, deletions, substitutions
 //   to go from one text to another.
 //
 //   Several options are available to customize this processing:
+//
 //     - split size: texts are broken into new lines first. Then if the texts are too large there are split into smaller pieces
 //       in order to compute their difference. This is done in order to reduce the size of the edit matrix which is used to compute all the edit costs
 //       the default is 200
@@ -30,7 +31,6 @@
 // -- "between the t and the n 2 letters have been modified"
 // showDistance "kitten" "kitsin" === "kit[~t/s~e/i]"
 // @
-
 use crate::costs::*;
 use crate::difference::*;
 use crate::edit_matrix::*;
@@ -136,12 +136,31 @@ mod tests {
     }
     #[test]
     fn test_show_distance() {
-        assert_eq!(show_distance("kitte" .to_string(), "kittei" .to_string()), "kitte[+i]");
-        assert_eq!(show_distance("kitten".to_string(), "kittein".to_string()) , "kitte[+i]n");
-        assert_eq!(show_distance("kitten".to_string(), "kit"    .to_string()) , "kit[-t-e-n]");
-        assert_eq!(show_distance("kit"   .to_string(), "kitten" .to_string()), "kit[+t+e+n]");
-        assert_eq!(show_distance("kitten".to_string(), "kitsin" .to_string()), "kit[~t/s~e/i]n");
-        assert_eq!(show_distance("kitte" .to_string(), "kitte"  .to_string()),  "kitte");
-
+        assert_eq!(show_distance("k".to_string(), "l".to_string()), "[~k/l]");
+        assert_eq!(show_distance("ki".to_string(), "ka".to_string()), "k[~i/a]");
+        assert_eq!(
+            show_distance("kitte".to_string(), "kittei".to_string()),
+            "kitte[+i]"
+        );
+        assert_eq!(
+            show_distance("kitten".to_string(), "kittein".to_string()),
+            "kitte[+i]n"
+        );
+        assert_eq!(
+            show_distance("kitten".to_string(), "kit".to_string()),
+            "kit[-t-e-n]"
+        );
+        assert_eq!(
+            show_distance("kit".to_string(), "kitten".to_string()),
+            "kit[+t+e+n]"
+        );
+        assert_eq!(
+            show_distance("kitten".to_string(), "kitsin".to_string()),
+            "kit[~t/s~e/i]n"
+        );
+        assert_eq!(
+            show_distance("kitte".to_string(), "kitte".to_string()),
+            "kitte"
+        );
     }
 }

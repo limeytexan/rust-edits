@@ -36,35 +36,63 @@ pub fn make_edit_operations<T: Clone>(
         return result;
     }
 
-    for i in 0..(ts1.len()) {
-        for j in 0..(ts2.len()) {
-            if let Some(op) = matrix.get_value(i, j) {
-                let dist = op.cost();
-                if i == 0 && j == 0 {
-                    if dist == 0 {
-                        if let Some(t) = ts1.first() {
-                            result.push(Keep((*t).clone()));
-                        }
-                    } else if let (Some(t1), Some(t2)) = (ts1.first(), ts2.first()) {
-                        result.push(Substitute((*t1).clone(), (*t2).clone()));
+    let ts1_size = ts1.len();
+    let ts2_size = ts2.len();
+
+    fn go<T : Clone>(
+        matrix: Matrix<Cost>,
+        ts1: Vec<T>,
+        ts2: Vec<T>,
+        i1: usize,
+        j1: usize,
+        result: &mut Vec<EditOperation<T>>,
+    ) {
+        let (i, j) = (i1 - 1, j1 - 1);
+        if i == 0 && j == 0 {
+            return;
+        }
+        if let Some(op) = matrix.get_value(i, j) {
+            let dist = op.cost();
+            if i == 1 && j == 1 {
+                if dist == 0 {
+                    if let Some(t) = ts1.first() {
+                        result.push(Keep((*t).clone()));
                     }
-                } else if j == ts2.len() - 1 {
-                    result.extend(ts1.iter().take(i).map(|t| Delete((*t).clone())));
-                } else if i == ts1.len() - 1 {
-                    result.extend(ts2.iter().take(j).map(|t| Insert((*t).clone())));
-                } else {
-                    match op {
-                        Insertion(a) => result.push(Insert(ts2[j - 1].clone())),
-                        Deletion(a) => result.push(Delete(ts1[i - 1].clone())),
-                        Substitution(a) => {
-                            result.push(Substitute(ts1[i - 1].clone(), ts2[j - 1].clone()))
-                        }
-                        _ => result.push(Keep(ts1[i - 1].clone())),
+                } else if let (Some(t1), Some(t2)) = (ts1.first(), ts2.first()) {
+                    result.push(Substitute((*t1).clone(), (*t2).clone()));
+                }
+            } else if j1 == 0 {
+                result.extend(ts1.iter().take(i).map(|t| Delete((*t).clone())));
+            } else if i1 == 0 {
+                result.extend(ts2.iter().take(j).map(|t| Delete((*t).clone())));
+            } else {
+                match op {
+                    Insertion(a) => {
+                        result.push(Insert(ts2[j - 1].clone()));
+                        go(matrix, ts1, ts2, i1, j1 - 1, result);
                     }
+                    Deletion(a) => {
+                        result.push(Delete(ts1[i - 1].clone()));
+                        go(matrix, ts1, ts2, i1 - 1, j1, result);
+                    },
+                    Substitution(a) => {
+                        result.push(Substitute(ts1[i - 1].clone(), ts2[j - 1].clone()));
+                        go(matrix, ts1, ts2, i1 - 1, j1 - 1, result);
+                    }
+                    _ => {
+                        result.push(Keep(ts1[i - 1].clone()));
+                        go(matrix, ts1, ts2, i1 - 1, j1 - 1, result);
+                    },
                 }
             }
         }
     }
 
+    // this is a bit tricky. We iterate with i1 = i + 1, j1 = j + 1
+    // where i and j are the real indices used to fetch values in the matrix and
+    // in the strings but i1 and j1 are used to make comparison against 0
+    // whereas checking if i and j are negative would not compile
+    go(matrix, ts1, ts2, ts1_size + 1, ts2_size + 1, &mut result);
+    result.reverse();
     result
 }

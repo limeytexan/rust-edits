@@ -56,7 +56,7 @@ pub fn default_display_edit_operations(e: EditOperation<char>) -> String {
     match e {
         Insert(c) => format!("+{}", c),
         Delete(c) => format!("-{}", c),
-        Substitute(c1, c2) => format!("~{}{}", c1, c2),
+        Substitute(c1, c2) => format!("~{}/{}", c1, c2),
         Keep(c) => c.to_string(),
     }
 }
@@ -77,20 +77,21 @@ pub fn display_diffs(options: DisplayOptions, operations: Vec<EditOperation<char
     let end = options.separators.end_separator;
     let mut result: Vec<Token> = vec![];
     let mut different = false;
+
     for operation in operations {
         match operation {
             Insert(_) | Delete(_) | Substitute(_, _) => {
-                different = true;
                 if !different {
                     result.push(Delimiter(start.clone()))
                 };
+                different = true;
                 result.push(Kept((options.display_edit_operation)(operation)))
             }
             Keep(_) => {
-                different = false;
                 if different {
                     result.push(Delimiter(end.clone()))
                 };
+                different = false;
                 result.push(Kept((options.display_edit_operation)(operation)))
             }
         }
