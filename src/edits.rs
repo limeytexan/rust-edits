@@ -1,5 +1,5 @@
+pub use crate::difference::*;
 use crate::costs::*;
-use crate::difference::*;
 use crate::edit_matrix::*;
 use crate::edit_operation::*;
 
