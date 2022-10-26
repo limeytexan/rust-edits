@@ -11,3 +11,6 @@ categories = ["value-formatting"]
 keywords = ["levenshtein", "edit-distance"]
 
 [dependencies]
+
+[badges]
+github = { repository = "etorreborre/rust-edits", workflow = "CI" }
