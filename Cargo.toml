@@ -1,6 +1,6 @@
 [package]
 name = "edits"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "This library displays the difference between 2 strings using the Levenshtein distance"
@@ -9,6 +9,11 @@ repository = "https://github.com/etorreborre/rust-edits"
 readme = "README.md"
 categories = ["value-formatting"]
 keywords = ["levenshtein", "edit-distance"]
+
+include = [
+  "**/*.rs",
+  "Cargo.toml",
+]
 
 [dependencies]
 
