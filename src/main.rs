@@ -2,6 +2,7 @@
 #![allow(unused_variables)]
 mod costs;
 mod color;
+mod token;
 use crate::costs::*;
 use crate::costs::Cost::*;
 
