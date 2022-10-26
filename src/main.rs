@@ -1,10 +1,11 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
-mod costs;
 mod color;
+mod costs;
+mod shorten;
 mod token;
-use crate::costs::*;
 use crate::costs::Cost::*;
+use crate::costs::*;
 
 fn main() {
     println!("{:?}", create_edit_matrix("hey", "bee"));
@@ -16,42 +17,25 @@ struct Matrix<T: Sized> {
 }
 
 impl<T> Matrix<T> {
+    // Return a value if it exists at coordinates i and j
     pub fn get_value(&self, i: usize, j: usize) -> Option<&T> {
         return self.rows.get(i)?.get(j);
     }
-    pub fn set_value(&mut self, i: usize, j: usize, t: T) -> () {
-        match self.rows.get(i) {
-            None => (),
-            Some(v) => match v.get(j) {
-                None => (),
-                Some(_) => self.rows[i][j] = t,
-            },
-        }
+
+    // Set a value at coordinates i and j.
+    // Returns Some(())) if there is such a value and None otherwise
+    pub fn set_value(&mut self, i: usize, j: usize, t: T) -> Option<()> {
+        if let Some(val) = self.rows.get_mut(i).and_then(|v| v.get_mut(j)) {
+            *val = t;
+            Some(())
+        } else { None }
     }
 }
 
 fn init_matrix<T: Clone>(rows_nb: usize, cols_nb: usize, t: T) -> Matrix<T> {
-    let row: Vec<T> = vec![t; cols_nb];
-    let matrix: Matrix<T> = Matrix {
-        rows: vec![row; rows_nb],
-    };
-
-    return matrix;
-}
-
-fn test1() -> () {
-    let mut matrix = init_matrix(1, 1, NoAction(0));
-    for i in 0..10 {
-        let cost = use_matrix(i, &matrix);
-        matrix.set_value(0, 0, cost)
+    Matrix {
+        rows: vec![vec![t; cols_nb]; rows_nb],
     }
-}
-
-fn use_matrix(i: usize, matrix: &Matrix<Cost>) -> Cost {
-    return match matrix.get_value(0, 1) {
-        Some(v) => v.clone(),
-        None => NoAction(0),
-    };
 }
 
 fn create_edit_matrix(str1: &str, str2: &str) -> Matrix<Cost> {
@@ -65,7 +49,7 @@ fn create_edit_matrix(str1: &str, str2: &str) -> Matrix<Cost> {
         } else if j == 0 {
             Deletion(i)
         } else {
-            match cost_of(str1, str2, i, j, &matrix).clone() {
+            match cost_of(str1, str2, i, j, &matrix) {
                 Some(c) => c,
                 _ => NoAction(0),
             }

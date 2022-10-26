@@ -2,7 +2,7 @@
 
 // A Token is used to enclose a piece of text to compare and delimiters showing where the text is different from another piece of text
 //   Start / End are markers for the beginning and end of that text
-#[derive(Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Token {
     Kept(String),
     Delimiter(String),
@@ -24,7 +24,7 @@ pub fn show_token(t: &Token) -> String {
 
 // Show a list of tokens.
 // Start/End are skipped
-pub fn show_tokens<'a>(ts: Vec<&'a Token>) -> String {
+pub fn show_tokens(ts: Vec<Token>) -> String {
     //T.concat . fmap showToken
     let mut s: Vec<String> = vec![];
     for t in ts.iter() {
