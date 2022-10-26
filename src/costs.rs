@@ -1,3 +1,5 @@
+use Cost::*;
+
 #[derive(Debug, Clone, PartialEq, Eq, Copy)]
 pub enum Cost {
     Insertion(usize),
@@ -7,7 +9,6 @@ pub enum Cost {
 }
 
 // Don't prefix Cost variants
-use Cost::*;
 
 impl Cost {
     pub fn cost(self: Self) -> usize {
