@@ -67,15 +67,15 @@ pub fn make_edit_operations<T: Clone>(
                 result.extend(ts2.iter().take(j).map(|t| Delete((*t).clone())));
             } else {
                 match op {
-                    Insertion(a) => {
+                    Insertion(_) => {
                         result.push(Insert(ts2[j - 1].clone()));
                         go(matrix, ts1, ts2, i1, j1 - 1, result);
                     }
-                    Deletion(a) => {
+                    Deletion(_) => {
                         result.push(Delete(ts1[i - 1].clone()));
                         go(matrix, ts1, ts2, i1 - 1, j1, result);
                     },
-                    Substitution(a) => {
+                    Substitution(_) => {
                         result.push(Substitute(ts1[i - 1].clone(), ts2[j - 1].clone()));
                         go(matrix, ts1, ts2, i1 - 1, j1 - 1, result);
                     }
