@@ -1,33 +1,11 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
+mod costs;
+use crate::costs::*;
+use crate::costs::Cost::*;
 
 fn main() {
     println!("{:?}", create_edit_matrix("hey", "bee"));
-}
-
-#[derive(Debug)]
-struct Costs {}
-
-#[derive(Debug, Clone, PartialEq, Copy)]
-enum Cost {
-    Insertion(usize),
-    Deletion(usize),
-    Substitution(usize),
-    NoAction(usize),
-}
-
-// Don't prefix Cost variants
-use Cost::*;
-
-impl Cost {
-    fn cost(self: Self) -> usize {
-        match self {
-            Insertion(c) => c,
-            Deletion(c) => c,
-            Substitution(c) => c,
-            NoAction(c) => c,
-        }
-    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -123,9 +101,9 @@ fn cost_of(str1: &str, str2: &str, i: usize, j: usize, matrix: &Matrix<Cost>) ->
     let v1 = str1.chars().nth(i1)?;
     let v2 = str2.chars().nth(j1)?;
 
-    let result = lower_cost(
-        v1,
-        v2,
+    let result = LevenshteinCosts::lower_cost(
+        &v1,
+        &v2,
         i1j.cost() + 1,                             // suppression
         i1j1.cost() + if v1 == v2 { 0 } else { 1 }, // substitution
         ij1.cost() + 1,
@@ -144,30 +122,8 @@ fn cost_of(str1: &str, str2: &str, i: usize, j: usize, matrix: &Matrix<Cost>) ->
     }
 }
 
-fn lower_cost(a: char, b: char, del: usize, subst: usize, ins: usize) -> Cost {
-    let (op_del, op_subst, op_ins) = (
-        Deletion(del),
-        Substitution(subst),
-        Insertion(ins),
-    );
-    if ins < del {
-        if (ins < subst) || (ins == subst && a == b) {
-            op_ins
-        } else {
-            op_subst
-        }
-    } else {
-        if (del < subst) || (del == subst && a == b) {
-            op_del
-        } else {
-            op_subst
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
     #[test]
