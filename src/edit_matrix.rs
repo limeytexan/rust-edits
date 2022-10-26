@@ -61,9 +61,9 @@ pub fn cost_of(
     let result = costs.lower_cost(
         &v1,
         &v2,
+        ij1.cost() + 1,                             // insertion
         i1j.cost() + 1,                             // suppression
         i1j1.cost() + if v1 == v2 { 0 } else { 1 }, // substitution
-        ij1.cost() + 1,
     ); // insertion
        // in case of a substitution if the resulting cost of (i, j) is the same as (i-1, j-1)
        // this means that we have substituted the same letter and it is the same as doing no action
