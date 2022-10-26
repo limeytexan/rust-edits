@@ -25,7 +25,6 @@ fn shorten_tokens(so: ShortenOptions, start: Token, end: Token, tokens: Vec<Toke
     let delimited = split_on_delimiters(start, end, to_shorten);
     let mut result: Vec<Token> = vec![];
     for ts in delimited.iter() {
-        println!("{:?}", ts);
         match (ts.first(), ts.last()) {
           (Some(Start), _) => result.extend(shorten_left(so.clone(), ts.clone())),
           (_, Some(End)) => result.extend(shorten_right(so.clone(), ts.clone())),

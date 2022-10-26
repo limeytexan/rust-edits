@@ -4,6 +4,7 @@ mod color;
 mod costs;
 mod shorten;
 mod token;
+use core::mem::*;
 use crate::costs::Cost::*;
 use crate::costs::*;
 
@@ -24,10 +25,9 @@ impl<T> Matrix<T> {
 
     // Set a value at coordinates i and j.
     // Returns Some(())) if there is such a value and None otherwise
-    pub fn set_value(&mut self, i: usize, j: usize, t: T) -> Option<()> {
+    pub fn set_value(&mut self, i: usize, j: usize, t: T) -> Option<T> {
         if let Some(val) = self.rows.get_mut(i).and_then(|v| v.get_mut(j)) {
-            *val = t;
-            Some(())
+            Some(replace(val, t))
         } else { None }
     }
 }
