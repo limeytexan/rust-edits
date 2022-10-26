@@ -2,7 +2,12 @@
 name = "edits"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "Apache-2.0"
+description = "This library displays the difference between 2 strings using the Levenshtein distance"
+homepage = "https://github.com/etorreborre/rust-edits"
+repository = "https://github.com/etorreborre/rust-edits"
+readme = "README.md"
+categories = ["value-formatting"]
+keywords = ["levenshtein", "edit-distance"]
 
 [dependencies]
