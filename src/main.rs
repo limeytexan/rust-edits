@@ -2,11 +2,12 @@
 #![allow(unused_variables)]
 mod color;
 mod costs;
-mod shorten;
-mod token;
-mod matrix;
+mod difference;
 mod edit_matrix;
 mod edit_operation;
+mod matrix;
+mod shorten;
+mod token;
 
 use edit_matrix::*;
 

@@ -12,9 +12,22 @@ pub enum Color {
 
 use Color::*;
 
-// Surround a string with ASCII control characters to color it
-pub fn color_as(c: Color, s: &str) -> String {
-    return format!("\x1b[{}m{}\x1b[0m", code(c), s);
+pub trait ColorAs {
+    fn color_as(self, c: Color) -> String;
+}
+
+impl ColorAs for String {
+    // Surround a string with ASCII control characters to color it
+    fn color_as(self, c: Color) -> String {
+        format!("\x1b[{}m{}\x1b[0m", code(c), self)
+    }
+}
+
+impl ColorAs for char {
+    // Surround a string with ASCII control characters to color it
+    fn color_as(self, c: Color) -> String {
+        self.to_string().color_as(c)
+    }
 }
 
 fn code(c: Color) -> String {
@@ -38,7 +51,7 @@ mod tests {
     fn test_color() {
         // uncomment to check if the colors are printed correctly
         // use super::*;
-        // println!("{:+}", color_as(Blue, "hello"));
-        // println!("{:+}", color_as(Green, "hello"));
+        // println!("{:+}", "hello".to_string().color_as(Blue));
+        // println!("{:+}", "hello".to_string().color_as(Green));
     }
 }

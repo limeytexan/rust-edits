@@ -4,8 +4,8 @@ use Token::*;
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub struct ShortenOptions {
-    size: u8,
-    text: String,
+    pub size: u8,
+    pub text: String,
 }
 
 // Cut the shorten size in 2
@@ -16,7 +16,7 @@ fn half(s: &ShortenOptions) -> ShortenOptions {
 }
 
 // Shorten a piece of text that has already been tokenized
-fn shorten_tokens(so: ShortenOptions, start: Token, end: Token, tokens: Vec<Token>) -> Vec<Token> {
+pub fn shorten_tokens(so: ShortenOptions, start: Token, end: Token, tokens: Vec<Token>) -> Vec<Token> {
     let mut to_shorten = vec![Start];
     to_shorten.extend(tokens);
     to_shorten.push(End);
