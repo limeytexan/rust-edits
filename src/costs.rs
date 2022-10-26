@@ -23,10 +23,10 @@ impl Cost {
 
 pub fn show_cost(c: &Cost) -> String {
     match c {
-        Insertion(c) => format!("{}{}", "+ ", c),
-        Deletion(c) => format!("{}{}", "- ", c),
-        Substitution(c) => format!("{}{}", "~ ", c),
-        NoAction(c) => format!("{}{}", "o ", c),
+        Insertion(c) => format!("+ {}", c),
+        Deletion(c) => format!("- {}", c),
+        Substitution(c) => format!("~ {}", c),
+        NoAction(c) => format!("o {}", c),
     }
 }
 
