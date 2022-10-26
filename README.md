@@ -40,3 +40,29 @@ assert_eq!(show_distance_with(my_split_size, default_display_options(), "kitten"
 
 The output can also be coloured. For example:
 <img src="doc/images/example.jpg" border="0"/>
+
+## Try it in a REPL
+
+You can try this library in a REPL:
+
+ - clone this repository
+ - install the `evcxr` repl: `cargo install evcxr_repl`
+ - start it
+```sh
+sh> evcxr
+Welcome to evcxr. For help, type :help
+>>
+```
+
+ - add the current path as a dependency and import the `edits` module
+
+```sh
+>> :dep edits = { path = "." }
+>> use edits::edits::*;
+```
+
+ - use a `show` function
+```sh
+>> println!("{}", show_distance_colored("abcd", "abcdefg"));
+abcd[efg]
+```
