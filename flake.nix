@@ -95,10 +95,6 @@
 
         packages.default = edits-crate;
 
-        apps.default = flake-utils.lib.mkApp {
-          drv = edits-crate;
-        };
-
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues self.checks;
 
