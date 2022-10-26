@@ -39,7 +39,7 @@ pub fn make_edit_operations<T: Clone>(
     let ts1_size = ts1.len();
     let ts2_size = ts2.len();
 
-    fn go<T : Clone>(
+    fn go<T: Clone>(
         matrix: Matrix<Cost>,
         ts1: Vec<T>,
         ts2: Vec<T>,
@@ -74,7 +74,7 @@ pub fn make_edit_operations<T: Clone>(
                     Deletion(_) => {
                         result.push(Delete(ts1[i - 1].clone()));
                         go(matrix, ts1, ts2, i1 - 1, j1, result);
-                    },
+                    }
                     Substitution(_) => {
                         result.push(Substitute(ts1[i - 1].clone(), ts2[j - 1].clone()));
                         go(matrix, ts1, ts2, i1 - 1, j1 - 1, result);
@@ -82,7 +82,7 @@ pub fn make_edit_operations<T: Clone>(
                     _ => {
                         result.push(Keep(ts1[i - 1].clone()));
                         go(matrix, ts1, ts2, i1 - 1, j1 - 1, result);
-                    },
+                    }
                 }
             }
         }
