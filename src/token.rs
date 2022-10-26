@@ -28,7 +28,7 @@ pub fn show_tokens(ts: Vec<Token>) -> String {
     //T.concat . fmap showToken
     let mut s: Vec<String> = vec![];
     for t in ts.iter() {
-        s.push(show_token(&t))
+        s.push(show_token(t))
     }
-    return s.join("");
+    s.join("")
 }
