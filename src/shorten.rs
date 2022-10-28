@@ -69,9 +69,8 @@ fn split_on_delimiters(start: Token, end: Token, tokens: Vec<Token>) -> Vec<Vec<
 }
 
 fn update_last<T: Clone>(result: &mut [Vec<T>], t: T) {
-    match result.last_mut() {
-        Some(l) => l.push(t),
-        None => (),
+    if let Some(l) = result.last_mut() {
+        l.push(t)
     };
 }
 
