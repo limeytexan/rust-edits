@@ -8,7 +8,8 @@
   pkg-config,
   libiconv,
   darwin,
-  evcxr
+  evcxr,
+  cargo-tarpaulin
 }:
 rustPlatform.buildRustPackage rec {
   pname = "edits";
@@ -59,6 +60,7 @@ rustPlatform.buildRustPackage rec {
   nativeBuildInputs = [
     pkg-config # for openssl
     evcxr
+    cargo-tarpaulin
   ];
 
   meta = with lib; {
